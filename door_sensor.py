@@ -9,13 +9,13 @@ from pubnub.enums import PNStatusCategory
 
 load_dotenv()
 
-REED_PIN = int(os.getenv("REED_PIN", "27"))
-LED_PIN  = int(os.getenv("LED_PIN", "17"))
+REED_PIN = int(os.getenv("REED_PIN"))
+LED_PIN  = int(os.getenv("LED_PIN"))
 
-DEVICE_ID = int(os.getenv("DEVICE_ID", "1"))
+DEVICE_ID = int(os.getenv("DEVICE_ID"))
 
-API_BASE = os.getenv("API_BASE", "http://127.0.0.1:8000").rstrip("/")
-DEVICE_API_KEY = os.getenv("DEVICE_API_KEY", "")
+API_BASE = os.getenv("API_BASE").rstrip("/")
+DEVICE_API_KEY = os.getenv("DEVICE_API_KEY")
 
 EVENTS_CHANNEL = os.getenv("PUBNUB_CHANNEL")
 SUBSCRIBE_KEY = os.getenv("PUBNUB_SUBSCRIBE_KEY")
