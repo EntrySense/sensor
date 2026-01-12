@@ -63,8 +63,6 @@ def publish_event(pubnub: PubNub, event_name: str):
     pubnub.publish().channel(EVENTS_CHANNEL).message(msg).sync()
     print("[PUB] sent:", msg)
 
-armed = False
-
 class CommandListener(SubscribeCallback):
     def message(self, pubnub, event):
         global armed
@@ -108,19 +106,23 @@ print("Boot status:", "armed" if armed else "disarmed")
 def read_door_open() -> bool:
     return GPIO.input(REED_PIN) == GPIO.HIGH
 
+def update_led(is_open: bool):
+    GPIO.output(
+        LED_PIN,
+        GPIO.HIGH if (armed and is_open) else GPIO.LOW
+    )
+
 last_open = None
 
 try:
-    # initialize state
     last_open = read_door_open()
-    GPIO.output(LED_PIN, GPIO.HIGH if last_open else GPIO.LOW)
+    update_led(last_open)
     publish_event(pubnub, "open" if last_open else "close")
 
     while True:
         is_open = read_door_open()
 
-        # LED reflects physical door state (independent of armed)
-        GPIO.output(LED_PIN, GPIO.HIGH if is_open else GPIO.LOW)
+        update_led(is_open)
 
         if is_open != last_open:
             last_open = is_open
