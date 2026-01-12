@@ -12,7 +12,7 @@ load_dotenv()
 REED_PIN = int(os.getenv("REED_PIN"))
 LED_PIN  = int(os.getenv("LED_PIN"))
 
-DEVICE_ID = int(os.getenv("DEVICE_ID"))
+DEVICE_ID = int(os.getenv("PUBNUB_DEVICE_ID"))
 
 API_BASE = os.getenv("API_BASE").rstrip("/")
 DEVICE_API_KEY = os.getenv("DEVICE_API_KEY")
